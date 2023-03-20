@@ -1,20 +1,11 @@
 package com.devsu.model;
 
-import jakarta.persistence.*;
-
-@Entity
 public class MessageDevsu {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "`message`")
     private String message;
-    @Column(name = "`to`")
     private String to;
-    @Column(name = "`from`")
     private String from;
-    @Column(name = "`timeToLifeSec`")
     private long timeToLifeSec;
 
     public MessageDevsu() {
@@ -59,6 +50,4 @@ public class MessageDevsu {
     public void setFrom(String from) {
         this.from = from;
     }
-
-
 }

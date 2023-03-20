@@ -1,9 +1,10 @@
 package com.devsu.controller;
 
+import com.devsu.DevsuApplication;
 import com.devsu.model.MessageDevsu;
 import com.devsu.properties.ProjectDetails;
-import com.devsu.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
@@ -12,9 +13,6 @@ import static java.util.Objects.isNull;
 @RestController
 @RequestMapping("/")
 public class MessageController {
-
-    @Autowired
-    MessageService messageService;
 
     @Autowired
     ProjectDetails projectDetails;
@@ -27,7 +25,7 @@ public class MessageController {
 
         try {
             if(validateApiKey(headers) && validateToken(headers)){
-                String result = "Hello "+messageDevsu.getTo()+" your message will be send";
+                String result = "Hello "+ messageDevsu.getTo()+" your message will be send";
                 return ResponseEntity.status(200).body(result);
             }
             else {
