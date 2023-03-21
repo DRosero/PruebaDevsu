@@ -1,23 +1,25 @@
 pipeline {
     agent any
     tools{
-        maven 'maven_3_5_0'
+        maven 'apache-maven-3.9.1'
     }
+
     stages{
-        stage('Build Maven'){
+        stage('Build'){
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: 'desarrollo']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DRosero/PruebaDevsu']]])
                 sh 'mvn clean install'
             }
         }
-        /*stage('Build docker image'){
+        stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t devsu .'
+                    sh 'docker build --tag devsu .'
                 }
             }
         }
-        stage('Push image to Hub'){
+
+        /*stage('Push image to Hub'){
             steps{
                 script{
                    withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
