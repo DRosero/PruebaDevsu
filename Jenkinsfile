@@ -14,26 +14,34 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build --tag devsu .'
+                    sh 'docker build --tag drosero01/devsu .'
                 }
             }
         }
 
-        /*stage('Push image to Hub'){
+        stage('Push image to Docker Hub'){
             steps{
                 script{
-                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                   sh 'docker login -u javatechie -p ${dockerhubpwd}'
-
-}
-                   sh 'docker push javatechie/devops-integration'
+                    withCredentials([string(credentialsId: 'dockerhub-pas', variable: 'dockerhubpass')]) {
+                        sh 'docker login -u drosero01 -p ${dockerhubpass}'
+                    }
+                   sh 'docker push drosero01/devsu'
                 }
             }
-        }*/
+        }
         stage('Deploy to k8s'){
             steps{
                 script{
-                    kubernetesDeploy configs: '', kubeConfig: [path: ''], kubeconfigId: '', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                    kubernetesDeploy(configs: 'deploymentservicek8s.yml', kubeconfigId: 'devsuk8s')
+                        //sh 'kubectl apply -f deploymentservicek8s.yml --context minikube'
+    // some block
+
+
+                    //sh "kubectl get pods"
+
+
+                    //kubernetesDeploy configs: '', kubeConfig: [path: ''], kubeconfigId: 'devsuk8sp', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+
                 }
             }
         }
