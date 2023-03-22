@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: pruebadevsucontainer
-          image: drosero01/devsu # Image that will be used to containers in the cluster
+          image: drosero01/devsu:latest # Image that will be used to containers in the cluster
           ports:
             - containerPort: 8090 # The port that the container is running on in the cluster
 
