@@ -7,9 +7,11 @@ pipeline {
     stages{
 
         stage('SonarQube Analysis') {
-            script{
-                withSonarQubeEnv(credentialsId: 'jenkins-sonar') {
-                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+            steps{
+                script{
+                    withSonarQubeEnv(credentialsId: 'jenkins-sonar') {
+                    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                    }
                 }
             }
         }
