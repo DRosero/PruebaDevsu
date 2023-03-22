@@ -33,16 +33,4 @@ spec:
       targetPort: 8090 # The port exposed by the service
   type: LoadBalancer # type of the service.
 
-  ---
-  apiVersion: autoscaling/v2
-  kind: HorizontalPodAutoscaler
-  metadata:
-    name: devsu-autoscaling
-  spec:
-    scaleTargetRef:
-      apiVersion: apps/v1
-      kind: Deployment
-      name: pruebaDevsu
-    minReplicas: 2
-    maxReplicas: 5
-    targetCPUUtilizationPercentage: 50
+
