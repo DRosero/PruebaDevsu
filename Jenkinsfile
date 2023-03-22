@@ -11,7 +11,14 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage('Build docker image'){
+
+        stage('SonarQube Analysis') {
+            withSonarQubeEnv(credentialsId: 'jenkins-sonar') {
+                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+            }
+        }
+
+        /*stage('Build docker image'){
             steps{
                 script{
                     sh 'docker build --tag drosero01/devsu .'
@@ -44,6 +51,6 @@ pipeline {
 
                 }
             }
-        }
+        }*/
     }
 }
