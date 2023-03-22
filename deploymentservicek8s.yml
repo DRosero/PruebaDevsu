@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment # Kubernetes resource kind we are creating
 metadata:
-  name: devsu-deployment
+  name: devsudeployment
 spec:
   selector:
     matchLabels:
-      app: pruebaDevsu
+      app: pruebadevsu
   replicas: 2 # Number of replicas that will be created for this deployment
   template:
     metadata:
       labels:
-        app: pruebaDevsu
+        app: pruebadevsu
     spec:
       containers:
-        - name: pruebaDevsuContainer
+        - name: pruebadevsucontainer
           image: devsu # Image that will be used to containers in the cluster
           ports:
             - containerPort: 8080 # The port that the container is running on in the cluster
@@ -23,10 +23,10 @@ spec:
 apiVersion: v1 # Kubernetes API version
 kind: Service # Kubernetes resource kind we are creating
 metadata: # Metadata of the resource kind we are creating
-  name: devsu-service
+  name: devsuservice
 spec:
   selector:
-    app: pruebaDevsu
+    app: pruebadevsu
   ports:
     - protocol: "TCP"
       port: 8090 # The port that the service is running on in the cluster
