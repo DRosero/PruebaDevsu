@@ -16,6 +16,7 @@ public class MessageController {
 
     @Autowired
     ProjectDetails projectDetails;
+    String prueba;
 
     @PostMapping("/DevOps")
     public ResponseEntity<Object> sendMessageServer(@RequestHeader HashMap<String, String> headers, @RequestBody MessageDevsu messageDevsu) throws Exception {
