@@ -5,6 +5,15 @@ pipeline {
     }
 
     stages{
+
+        stage('SonarQube Analysis') {
+            script{
+                withSonarQubeEnv(credentialsId: 'jenkins-sonar') {
+                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+                }
+            }
+        }
+
         stage('Build'){
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: 'desarrollo']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DRosero/PruebaDevsu']]])
@@ -12,11 +21,7 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            withSonarQubeEnv(credentialsId: 'jenkins-sonar') {
-                sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
-            }
-        }
+
 
         /*stage('Build docker image'){
             steps{
