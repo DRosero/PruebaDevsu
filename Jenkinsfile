@@ -17,7 +17,6 @@ pipeline {
             }
         }
 
-
         stage('Build'){
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: 'desarrollo']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/DRosero/PruebaDevsu']]])
@@ -25,9 +24,7 @@ pipeline {
             }
         }
 
-
-
-        /*stage('Build docker image'){
+        stage('Build docker image'){
             steps{
                 script{
                     sh 'docker build --tag drosero01/devsu .'
@@ -49,17 +46,8 @@ pipeline {
             steps{
                 script{
                     kubernetesDeploy(configs: 'deploymentservicek8s.yml', kubeconfigId: 'devsuk8s')
-                        //sh 'kubectl apply -f deploymentservicek8s.yml --context minikube'
-    // some block
-
-
-                    //sh "kubectl get pods"
-
-
-                    //kubernetesDeploy configs: '', kubeConfig: [path: ''], kubeconfigId: 'devsuk8sp', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
-
                 }
             }
-        }*/
+        }
     }
 }

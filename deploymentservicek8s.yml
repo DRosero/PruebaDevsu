@@ -18,7 +18,6 @@ spec:
           ports:
             - containerPort: 8090 # The port that the container is running on in the cluster
 
-
 ---
 apiVersion: v1 # Kubernetes API version
 kind: Service # Kubernetes resource kind we are creating
@@ -32,5 +31,25 @@ spec:
       port: 8090 # The port that the service is running on in the cluster
       targetPort: 8090 # The port exposed by the service
   type: LoadBalancer # type of the service.
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: devsu-autoscaling
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: pruebaDevsu
+  minReplicas: 1
+  maxReplicas: 2
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
 
 
