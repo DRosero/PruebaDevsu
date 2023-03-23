@@ -33,7 +33,7 @@ spec:
   type: LoadBalancer # type of the service.
 
 ---
-apiVersion: autoscaling/v2
+apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: devsu-autoscaling
