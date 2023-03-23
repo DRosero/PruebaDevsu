@@ -37,6 +37,40 @@ public class MessageController {
 
     }
 
+    @GetMapping("/DevOps")
+    public ResponseEntity<Object> getMessageServer(@RequestHeader Map<String, String> headers)throws Exception {
+
+        try {
+            if(validateApiKey(headers) && validateToken(headers)){
+                String result = "Error";
+                return ResponseEntity.status(200).body(result);
+            }
+            else {
+                return ResponseEntity.status(500).body("Error");
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/DevOps")
+    public ResponseEntity<Object> deleteMessageServer(@RequestHeader Map<String, String> headers)throws Exception {
+
+        try {
+            if(validateApiKey(headers) && validateToken(headers)){
+                String result = "Error";
+                return ResponseEntity.status(200).body(result);
+            }
+            else {
+                return ResponseEntity.status(500).body("Error");
+            }
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(e.getMessage());
+        }
+    }
+
     public String getApiKey(){
         return projectDetails.getApiKey();
     }
@@ -49,7 +83,7 @@ public class MessageController {
         return projectDetails.getTokenKey();
     }
 
-    private Boolean validateApiKey (Map<String,String> headers) throws Exception {
+    public Boolean validateApiKey (Map<String,String> headers) throws Exception {
         //debería leerse del poperties
         String apiKey =getApiKey();//"X-Parse-REST-API-Key";
         String apiValue = getapiKeyValue();//"2f5ae96c-b558-4c7b-a590-a501ae1c3f6c";
@@ -70,7 +104,7 @@ public class MessageController {
         return respuesta;
     }
 
-    private Boolean validateToken (Map<String,String> headers) throws Exception {
+    public Boolean validateToken (Map<String,String> headers) throws Exception {
         Boolean response = false;
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         try {
