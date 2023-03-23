@@ -1,7 +1,14 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: devsunamespace
+---
+
 apiVersion: apps/v1
 kind: Deployment # Kubernetes resource kind we are creating
 metadata:
   name: devsudeployment
+  namespace: devsunamespace
 spec:
   selector:
     matchLabels:
@@ -16,20 +23,21 @@ spec:
         - name: pruebadevsucontainer
           image: drosero01/devsu:latest # Image that will be used to containers in the cluster
           ports:
-            - containerPort: 8090 # The port that the container is running on in the cluster
+            - containerPort: 8080 # The port that the container is running on in the cluster
 
 ---
 apiVersion: v1 # Kubernetes API version
 kind: Service # Kubernetes resource kind we are creating
 metadata: # Metadata of the resource kind we are creating
   name: devsuservice
+  namespace: devsunamespace
 spec:
   selector:
     app: pruebadevsu
   ports:
     - protocol: "TCP"
-      port: 8090 # The port that the service is running on in the cluster
-      targetPort: 8090 # The port exposed by the service
+      port: 8080 # The port that the service is running on in the cluster
+      targetPort: 8080 # The port exposed by the service
   type: LoadBalancer # type of the service.
 
 ---
@@ -37,6 +45,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: devsu-autoscaling
+  namespace: devsunamespace
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
