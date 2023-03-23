@@ -59,13 +59,13 @@ pipeline {
             }
         }
 
-        stage('Create ingress'){
+        /*stage('Create ingress'){
                     steps{
                         script{
                             kubernetesDeploy(configs: 'ingress.yml', kubeconfigId: 'devsuk8s')
                         }
                     }
-                }
+                }*/
 
     }
 }
