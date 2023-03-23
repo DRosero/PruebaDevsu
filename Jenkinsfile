@@ -43,10 +43,10 @@ pipeline {
             }
         }
 
-        stage('Deploy to k8s'){
+        stage('Create namespace'){
                     steps{
                         script{
-                            kubernetesDeploy(configs: 'deploymentservicek8s.yml', kubeconfigId: 'devsuk8s')
+                            kubernetesDeploy(configs: 'namespace.yml', kubeconfigId: 'devsuk8s')
                         }
                     }
         }
@@ -58,6 +58,14 @@ pipeline {
                 }
             }
         }
+
+        stage('Create ingress'){
+                    steps{
+                        script{
+                            kubernetesDeploy(configs: 'ingress.yml', kubeconfigId: 'devsuk8s')
+                        }
+                    }
+                }
 
     }
 }
