@@ -9,8 +9,8 @@ public class ProjectDetails {
  @Value("${apiKey}")
  private String apiKey;
 
- @Value("${apyKeyValue}")
- private String apyKeyValue;
+ @Value("${apiKeyValue}")
+ private String apiKeyValue;
 
  @Value("${tokenKey}")
  private String tokenKey;
@@ -26,19 +26,19 @@ public class ProjectDetails {
         this.apiKey = apiKey;
     }
 
-    public String getApyKeyValue() {
-        return apyKeyValue;
-    }
-
-    public void setApyKeyValue(String apyKeyValue) {
-        this.apyKeyValue = apyKeyValue;
-    }
-
     public String getTokenKey() {
         return tokenKey;
     }
 
     public void setTokenKey(String tokenKey) {
         this.tokenKey = tokenKey;
+    }
+
+    public String getApiKeyValue() {
+        return apiKeyValue;
+    }
+
+    public void setApiKeyValue(String apiKeyValue) {
+        this.apiKeyValue = apiKeyValue;
     }
 }
