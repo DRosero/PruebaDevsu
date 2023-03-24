@@ -62,7 +62,6 @@ pipeline {
             steps{
                 script{
                     kubernetesDeploy(configs: 'ingress.yml', kubeconfigId: 'devsuk8s')
-                    sh 'kubectl apply -f ingress.yml'
                 }
             }
         }

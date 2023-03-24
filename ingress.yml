@@ -5,6 +5,7 @@ metadata:
   namespace: devsunamespace
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
     - http:
