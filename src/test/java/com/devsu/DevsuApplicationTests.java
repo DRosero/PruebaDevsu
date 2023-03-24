@@ -16,7 +16,6 @@ class DevsuApplicationTests {
 
 	@Autowired
 	private MockMvc mockMvc;
-
 	String uri = "/DevOps";
 	MvcResult mvcResult;
 

@@ -6,12 +6,11 @@ pipeline {
 
     stages{
 
-        stage('SonarQube Analysis') {
+        stage('Test and SonarQube Analysis') {
             steps{
                 script{
                     withSonarQubeEnv(credentialsId: 'jenkins-sonar') {
                     sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.1.2184:sonar'
-                    //sh 'mvn sonar:sonar'
                     }
                 }
             }
@@ -59,13 +58,14 @@ pipeline {
             }
         }
 
-        /*stage('Create ingress'){
-                    steps{
-                        script{
-                            kubernetesDeploy(configs: 'ingress.yml', kubeconfigId: 'devsuk8s')
-                        }
-                    }
-                }*/
+        stage('Create ingress'){
+            steps{
+                script{
+                    kubernetesDeploy(configs: 'ingress.yml', kubeconfigId: 'devsuk8s')
+                    sh 'kubectl apply -f ingress.yml'
+                }
+            }
+        }
 
     }
 }

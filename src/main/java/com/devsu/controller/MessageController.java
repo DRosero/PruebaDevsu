@@ -16,60 +16,12 @@ import javax.crypto.spec.SecretKeySpec;
 @RequestMapping("/")
 public class MessageController {
 
+    /***/
+
     @Autowired
     ProjectDetails projectDetails;
-
-    @PostMapping("/DevOps")
-    public ResponseEntity<Object> sendMessageServer(@RequestHeader Map<String, String> headers, @RequestBody MessageDevsu messageDevsu) throws Exception {
-
-        try {
-            if(validateApiKey(headers) && validateToken(headers)){
-                String result = "Hello "+ messageDevsu.getTo()+" your message will be send";
-                return ResponseEntity.status(200).body(result);
-            }
-            else {
-                return ResponseEntity.status(500).body("Error");
-            }
-
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
-        }
-
-    }
-
-    @GetMapping("/DevOps")
-    public ResponseEntity<Object> getMessageServer(@RequestHeader Map<String, String> headers)throws Exception {
-
-        try {
-            if(validateApiKey(headers) && validateToken(headers)){
-                String result = "Error";
-                return ResponseEntity.status(200).body(result);
-            }
-            else {
-                return ResponseEntity.status(500).body("Error");
-            }
-
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
-        }
-    }
-
-    @DeleteMapping("/DevOps")
-    public ResponseEntity<Object> deleteMessageServer(@RequestHeader Map<String, String> headers)throws Exception {
-
-        try {
-            if(validateApiKey(headers) && validateToken(headers)){
-                String result = "Error";
-                return ResponseEntity.status(200).body(result);
-            }
-            else {
-                return ResponseEntity.status(500).body("Error");
-            }
-
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(e.getMessage());
-        }
-    }
+    private final int response200=200;
+    private final int response500=500;
 
     public String getApiKey(){
         return projectDetails.getApiKey();
@@ -83,21 +35,66 @@ public class MessageController {
         return projectDetails.getTokenKey();
     }
 
-    public Boolean validateApiKey (Map<String,String> headers) throws Exception {
-        //debería leerse del poperties
-        String apiKey =getApiKey();//"X-Parse-REST-API-Key";
-        String apiValue = getapiKeyValue();//"2f5ae96c-b558-4c7b-a590-a501ae1c3f6c";
+    @PostMapping("/DevOps")
+    public ResponseEntity<Object> sendMessageServer(@RequestHeader Map<String, String> headers, @RequestBody MessageDevsu messageDevsu) throws Exception {
 
+        try {
+            if(validateApiKey(headers) && validateToken(headers)){
+                String result = "Hello "+ messageDevsu.getTo()+" your message will be send";
+                return ResponseEntity.status(response200).body(result);
+            }
+            else {
+                return ResponseEntity.status(response500).body("Error");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(response500).body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/DevOps")
+    public ResponseEntity<Object> getMessageServer(@RequestHeader Map<String, String> headers)throws Exception {
+
+        try {
+            if(validateApiKey(headers) && validateToken(headers)){
+                String result = "Error";
+                return ResponseEntity.status(response200).body(result);
+            }
+            else {
+                return ResponseEntity.status(response500).body("Error");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(response500).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/DevOps")
+    public ResponseEntity<Object> deleteMessageServer(@RequestHeader Map<String, String> headers)throws Exception {
+
+        try {
+            if(validateApiKey(headers) && validateToken(headers)){
+                String result = "Error";
+                return ResponseEntity.status(response200).body(result);
+            }
+            else {
+                return ResponseEntity.status(response500).body("Error");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(response500).body(e.getMessage());
+        }
+    }
+
+    public Boolean validateApiKey (Map<String,String> headers) throws Exception {
+
+        String apiKey =getApiKey();
+        String apiValue = getapiKeyValue();
         String apiValueRequest = headers.get(apiKey.toLowerCase(Locale.ROOT));
         //verificar que existe la cabecera
-        if (isNull(apiValueRequest))
-        {
+        if (isNull(apiValueRequest)) {
             throw new Exception("Es requerido el header: "+apiKey);
         }
         //verificar que sea el valor correcto
         Boolean respuesta = apiValueRequest.equals(apiValue)?true:false;
-        if (!respuesta)
-        {
+        if (!respuesta) {
             throw new Exception("El valor correspondiente al header: "+apiKey+" es erróneo");
         }
 
@@ -108,7 +105,7 @@ public class MessageController {
         Boolean response = false;
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
         try {
-            String headerKey = gettokenKey();//"X-JWT-KWY";
+            String headerKey = gettokenKey();
             String tokenValue = headers.get(headerKey.toLowerCase(Locale.ROOT));
             //verificar que exista el header
             if (isNull(tokenValue)) {

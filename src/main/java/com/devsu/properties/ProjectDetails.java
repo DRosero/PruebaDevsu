@@ -11,21 +11,17 @@ public class ProjectDetails {
 
  @Value("${apiKeyValue}")
  private String apiKeyValue;
-
  @Value("${tokenKey}")
  private String tokenKey;
 
     public ProjectDetails() {
     }
-
     public String getApiKey() {
         return apiKey;
     }
-
     public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
-
     public String getTokenKey() {
         return tokenKey;
     }
