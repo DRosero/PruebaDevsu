@@ -16,8 +16,6 @@ import javax.crypto.spec.SecretKeySpec;
 @RequestMapping("/")
 public class MessageController {
 
-    /***/
-
     @Autowired
     ProjectDetails projectDetails;
     private final int response200=200;
@@ -35,6 +33,13 @@ public class MessageController {
         return projectDetails.getTokenKey();
     }
 
+    /**Metodo que permite validar los headers enviados, comprobando si el apikey y token son los indicados en aplication.properties
+     * apiKey=X-Parse-REST-API-Key
+     * apiKeyValue=2f5ae96c-b558-4c7b-a590-a501ae1c3f6c
+     * tokenKey=X-JWT-KWY
+     *
+     * */
+
     @PostMapping("/DevOps")
     public ResponseEntity<Object> sendMessageServer(@RequestHeader Map<String, String> headers, @RequestBody MessageDevsu messageDevsu) throws Exception {
 
@@ -50,6 +55,9 @@ public class MessageController {
             return ResponseEntity.status(response500).body(e.getMessage());
         }
     }
+
+    /** Metodo que despliega el mensaje de error si se utiliza la llamada HTTP GET, el microservicio solo responde a la llamada POST
+     * */
 
     @GetMapping("/DevOps")
     public ResponseEntity<Object> getMessageServer(@RequestHeader Map<String, String> headers)throws Exception {
@@ -67,6 +75,8 @@ public class MessageController {
         }
     }
 
+    /** Metodo que despliega el mensaje de error si se utiliza la llamada HTTP DELETE, el microservicio solo responde a la llamada POST
+     * */
     @DeleteMapping("/DevOps")
     public ResponseEntity<Object> deleteMessageServer(@RequestHeader Map<String, String> headers)throws Exception {
 
@@ -82,6 +92,9 @@ public class MessageController {
             return ResponseEntity.status(response500).body(e.getMessage());
         }
     }
+
+    /** Metodo que valida si el apikey y el value recibidos sean correctos e iguales a los indicados en el archivo application.properties
+     * */
 
     public Boolean validateApiKey (Map<String,String> headers) throws Exception {
 
@@ -101,6 +114,11 @@ public class MessageController {
         return respuesta;
     }
 
+    /** Metodo que valida si el key y el token de JWT recibidos sean correctos e iguales a los indicados en el archivo application.properties
+     * el token JWT fue generado a partir del payload, tokenkey con el algoritmo HS256 obteniendose el siguiente
+     * eyJhbGciOiJIUzI1NiJ9.eyJ0aW1lVG9MaWZlU2VjIjoiNDUiLCJmcm9tIjoiUml0YSBBc3R1cmlhIiwidG8iOiJKdWFuIFBlcmV6IiwibWVzc2FnZSI6IlRoaXMgaXMgYSB0ZXN0In0.kUpKhG6y-v5EzRioJA8QLIqmb-mp8zCrWeN_iZZu6xs
+     * el metodo separa el token y verifica la firma del token
+     * */
     public Boolean validateToken (Map<String,String> headers) throws Exception {
         Boolean response = false;
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
@@ -115,9 +133,6 @@ public class MessageController {
             //Separar el token (header, payload, firma)
             String[] datosToken = tokenValue.split("\\.");
             //decodificar token
-            Base64.Decoder decoder = Base64.getUrlDecoder();
-            String header = new String(decoder.decode(datosToken[0]));
-            String payload = new String(decoder.decode(datosToken[1]));
             String signature =new String(datosToken[2]);
 
             //verificar firma del token

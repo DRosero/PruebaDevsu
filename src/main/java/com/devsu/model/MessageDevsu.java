@@ -2,6 +2,16 @@ package com.devsu.model;
 
 public class MessageDevsu {
 
+    /**Clase que contiene los elementos del payloa en formato JSON
+     * key-value
+     *{
+     *     "message":"This is a test",
+     *     "to":"Juan Perez",
+     *     "from":"Rita Asturia",
+     *     "timeToLifeSec": 45
+     * }
+     * */
+
     private String message;
     private String to;
     private String from;

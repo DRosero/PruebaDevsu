@@ -6,9 +6,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProjectDetails {
 
+    /**Clase para obtener los valores de apikey, value, y tokenkey del archivo application.properties*/
+
  @Value("${apiKey}")
  private String apiKey;
-
  @Value("${apiKeyValue}")
  private String apiKeyValue;
  @Value("${tokenKey}")
