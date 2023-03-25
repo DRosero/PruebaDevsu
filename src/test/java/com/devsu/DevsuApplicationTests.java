@@ -19,6 +19,7 @@ class DevsuApplicationTests {
 	String uri = "/DevOps";
 	MvcResult mvcResult;
 
+	/**Metodo que prueba la respuesta del microservicio sin recibir las cabeceras, obteniendose un error 500*/
 	@Test
 	public void testErrorResponsePostJSON() throws Exception {
 		String jsonToSend= "{\"message\":\"This is a test\",\"to\":\"Juan Perez\",\"from\":\"Rita Asturia\",\"timeToLifeSec\":\"45\"}";
@@ -26,6 +27,7 @@ class DevsuApplicationTests {
 		assertEquals(500, mvcResult.getResponse().getStatus());
 	}
 
+	/**Metodo que prueba la respuesta del microservicio con un payload invalido, obteniendose un error 400*/
 	@Test
 	public void testErrorJSONFormat() throws Exception {
 		String jsonToSend= "This is a text string, not a JSON format";
